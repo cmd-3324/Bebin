@@ -31,7 +31,7 @@
     <div id="main">
         <x-video-card />
     </div>
-
+    {{-- <x-video-card-display /> --}}
     @stack('scripts')
 </body>
 </html>

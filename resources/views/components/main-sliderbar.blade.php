@@ -7,10 +7,13 @@
     </div>
 
     <div class="sidebar-section">
+    @auth
         <div class="sidebar-item"><i class="fas fa-folder"></i> Library</div>
         <div class="sidebar-item"><i class="fas fa-history"></i> History</div>
         <div class="sidebar-item"><i class="fas fa-clock"></i> Watch later</div>
         <div class="sidebar-item"><i class="fas fa-thumbs-up"></i> Liked videos</div>
+    @endauth
+
     </div>
 
     <div class="sidebar-section">
@@ -35,7 +38,6 @@
         <div class="sidebar-item"><i class="fas fa-question-circle"></i> Help</div>
         <div class="sidebar-item"><i class="fas fa-comment-alt"></i> Send feedback</div>
     </div>
-
     <div class="dark-toggle" id="darkToggle">
         <span>Dark Mode</span>
         <i class="fas fa-moon"></i>

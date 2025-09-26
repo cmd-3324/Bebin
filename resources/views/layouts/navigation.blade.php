@@ -6,14 +6,7 @@
         <div id="sidebarToggle" class="header-icon"><i class="fas fa-bars"></i></div>
         <div class="logo"><i class="fab fa-youtube"></i> Bebin</div>
     </div>
-
-    <div class="header-center">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search">
-            <button class="search-button"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="mic-button"><i class="fas fa-microphone"></i></div>
-    </div>
+    <x-search-form/>
 
     <div class="header-right">
     <div class="upload-button" style="display: inline-flex; align-items: center; cursor: pointer; gap: 6px; font-weight: 500; font-size: 14px; color: #0f0f0f; user-select: none;">

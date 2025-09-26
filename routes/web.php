@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MangeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+// web.php
+// Route::get('/videos/{id}', function($id) {
+//     return view('video-card-display'); // later fetch from DB
+// })->name('videos.show');
+Route::get('/video-watching{id}', [MangeController::class,'strema_video'])->name("videos.show");
 require __DIR__.'/auth.php';
