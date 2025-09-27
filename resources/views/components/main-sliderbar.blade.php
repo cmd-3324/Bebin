@@ -1,7 +1,12 @@
 {{-- Main Sidebar Component --}}
 <div id="sidebar" class="collapsed">
     <div class="sidebar-section">
-        <div class="sidebar-item active"><i class="fas fa-home"></i> Home</div>
+        {{-- Home with route --}}
+        <a href="{{ route('home') }}" class="sidebar-item {{ request()->routeIs('') ? 'active' : '' }}">
+            <i class="fas fa-home"></i> Home
+        </a>
+
+        {{-- The rest unchanged --}}
         <div class="sidebar-item"><i class="fas fa-fire"></i> Trending</div>
         <div class="sidebar-item"><i class="fas fa-play-circle"></i> Subscriptions</div>
     </div>
@@ -13,7 +18,6 @@
         <div class="sidebar-item"><i class="fas fa-clock"></i> Watch later</div>
         <div class="sidebar-item"><i class="fas fa-thumbs-up"></i> Liked videos</div>
     @endauth
-
     </div>
 
     <div class="sidebar-section">
@@ -38,11 +42,13 @@
         <div class="sidebar-item"><i class="fas fa-question-circle"></i> Help</div>
         <div class="sidebar-item"><i class="fas fa-comment-alt"></i> Send feedback</div>
     </div>
+
     <div class="dark-toggle" id="darkToggle">
         <span>Dark Mode</span>
         <i class="fas fa-moon"></i>
     </div>
 </div>
+
 
 @push('styles')
 <style>

@@ -23,5 +23,9 @@ Route::middleware('auth')->group(function () {
 // Route::get('/video/{id}', function($id) {
 //     return view('video-card-display'); // later fetch from DB
 // })->name('videos.show');
- Route::get('/video-watching{id}', [MangeController::class,'strema_video'])->name("videos.show");
+ Route::get('/video-watching/{id}', [MangeController::class, 'strema_video'])
+     ->name('videos.show');
+Route::get('home', function() {
+return view("layouts.app");
+})->name("home");
 require __DIR__.'/auth.php';

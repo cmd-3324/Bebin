@@ -6,13 +6,20 @@
 <div class="video-page">
     {{-- Main Video Player --}}
     <div class="video-main">
-        <div class="player">
-            <iframe id="{{ $video->id }}" width="100%" height="480" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-
+     <div class="player">
+    <iframe
+        id="video-iframe"
+        width="100%"
+        height="480"
+        src="{{ $video['video_url'] }}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
         {{-- Title and Actions container --}}
         <div class="title-actions">
-            <h1 class="video-title" id="video-title"></h1>
+            <h1 class="video-title" id="video-title">{{ $video['title'] }}</h1>
             <div class="actions">
                 <button>👍 Like</button>
                 <button>👎 Dislike</button>
@@ -21,13 +28,22 @@
             </div>
         </div>
 
-        <p class="video-meta" id="video-meta"></p>
+        <p class="video-meta" id="video-meta">
+            {{ $video['views'] }} • {{ $video['time_passed'] }}
+        </p>
 
         {{-- Uploader row with subscribe --}}
         <div class="uploader">
-            <img src="" class="uploader-img" id="uploader-img" alt="">
+            <img
+                src="{{ $video['uploader_img'] }}"
+                class="uploader-img"
+                id="uploader-img"
+                alt="{{ $video['uploader_name'] }}"
+            >
             <div class="uploader-details">
-                <p class="uploader-name" id="uploader-name"></p>
+                <p class="uploader-name" id="uploader-name">
+                    {{ $video['uploader_name'] }}
+                </p>
             </div>
             <div class="subscribe-wrapper">
                 <button class="subscribe-btn">Subscribe</button>
@@ -37,14 +53,16 @@
 
         {{-- Description with Read More --}}
         <div class="description">
-            <pre class="description-text" id="video-description"></pre>
+            <pre class="description-text" id="video-description">
+{{ $video['description'] ?? '' }}
+            </pre>
             <button class="read-more-btn" aria-expanded="false">Read more</button>
         </div>
     </div>
 
     {{-- Related Videos --}}
     <div class="related" id="related-videos">
-        @foreach($videos as $rv)
+        @foreach($relatedVideos as $rv)
         <div class="video-card" data-video='@json($rv)'>
             <div class="thumbnail">
                 <img src="{{ $rv['thumbnail'] }}" alt="{{ $rv['title'] }}">
@@ -278,7 +296,7 @@ body.dark .video-card {
     color: #909090;
 }
 </style>
-
+<a href="{{ route('home') }}">homr</a>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Read more toggle (existing)
@@ -292,27 +310,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // VIDEO CARD CLICK LOGIC
     const videoCards = document.querySelectorAll('.video-card');
-    const iframe = document.getElementById('video-iframe');
-    const titleEl = document.getElementById('video-title');
-    const metaEl = document.getElementById('video-meta');
-    const uploaderImg = document.getElementById('uploader-img');
-    const uploaderName = document.getElementById('uploader-name');
-    const descriptionEl = document.getElementById('video-description');
-    const relatedWrapper = document.getElementById('related-videos');
 
     function loadVideo(video) {
-        iframe.src = video.video_url || '';
+        // Update browser URL without page reload
+        const newUrl = `/video-watching/${video.id}`;
+        window.history.pushState({}, '', newUrl);
+
+        // Update video content
+        const iframe = document.getElementById('video-iframe');
+        const titleEl = document.getElementById('video-title');
+        const metaEl = document.getElementById('video-meta');
+        const uploaderImg = document.getElementById('uploader-img');
+        const uploaderName = document.getElementById('uploader-name');
+        const descriptionEl = document.getElementById('video-description');
+
+        iframe.src = video.video_url || video.thumbnail || '';
         titleEl.textContent = video.title || '';
         metaEl.textContent = `${video.views || ''} • ${video.time_passed || ''}`;
         uploaderImg.src = video.uploader_img || '';
         uploaderImg.alt = video.uploader_name || '';
         uploaderName.textContent = video.uploader_name || '';
         descriptionEl.textContent = video.description || '';
+
+        // Reset description state
         descriptionBox.classList.remove('expanded');
         readMoreBtn.textContent = 'Read more';
         readMoreBtn.setAttribute('aria-expanded', false);
 
-        // EXCLUDE CURRENT VIDEO FROM RELATED
+        // Hide the clicked video from related videos
         videoCards.forEach(card => {
             const cardVideo = JSON.parse(card.dataset.video);
             if(cardVideo.id === video.id){
@@ -323,17 +348,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Load first video initially
-    if (videoCards.length > 0) {
-        loadVideo(JSON.parse(videoCards[0].dataset.video));
-    }
-
-    // Handle clicks
+    // Handle clicks on related videos
     videoCards.forEach(card => {
-        card.addEventListener('click', function () {
+        card.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
             const videoData = JSON.parse(this.dataset.video);
             loadVideo(videoData);
         });
+    });
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function() {
+        // You might want to reload the page or fetch new data
+        window.location.reload();
     });
 });
 </script>
