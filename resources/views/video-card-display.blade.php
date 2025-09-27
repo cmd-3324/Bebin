@@ -7,7 +7,7 @@
     {{-- Main Video Player --}}
     <div class="video-main">
         <div class="player">
-            <iframe id="video-iframe" width="100%" height="480" src="" frameborder="0" allowfullscreen></iframe>
+            <iframe id="{{ $video->id }}" width="100%" height="480" src="" frameborder="0" allowfullscreen></iframe>
         </div>
 
         {{-- Title and Actions container --}}

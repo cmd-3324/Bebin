@@ -20,8 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // web.php
-// Route::get('/videos/{id}', function($id) {
+// Route::get('/video/{id}', function($id) {
 //     return view('video-card-display'); // later fetch from DB
 // })->name('videos.show');
-Route::get('/video-watching{id}', [MangeController::class,'strema_video'])->name("videos.show");
+ Route::get('/video-watching{id}', [MangeController::class,'strema_video'])->name("videos.show");
 require __DIR__.'/auth.php';
