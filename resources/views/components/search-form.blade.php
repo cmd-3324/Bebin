@@ -1,7 +1,7 @@
 
 <div class="header-center">
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search">
+            <input type="text" class="search-input" placeholder="Search" style="border-radiuse:50px;">
             <button class="search-button"><i class="fas fa-search"></i></button>
         </div>
         <div class="mic-button"><i class="fas fa-microphone"></i></div>

@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 // })->name('videos.show');
  Route::get('/video-watching/{id}', [MangeController::class, 'strema_video'])
      ->name('videos.show');
-Route::get('home', function() {
+Route::get('/home', function() {
 return view("layouts.app");
 })->name("home");
 require __DIR__.'/auth.php';

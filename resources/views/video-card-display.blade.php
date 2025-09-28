@@ -1,7 +1,7 @@
 {{-- Video Display Page --}}
 {{-- Implementation of slider and nav --}}
 @include('layouts.navigation')
-<x-main-sliderbar/>
+
 
 <div class="video-page">
     {{-- Main Video Player --}}
@@ -120,10 +120,16 @@
     flex: 1;
     word-break: break-word;
 }
+body.dark .video-title {
+    color: #f1f1f1;
+}
 .video-meta {
     font-size: 14px;
     color: #606060;
     margin-bottom: 12px;
+}
+body.dark .video-meta {
+    color: #aaa;
 }
 
 /* Uploader row */
@@ -145,6 +151,9 @@
 .uploader-name {
     font-weight: bold;
     font-size: 14px;
+}
+body.dark .uploader-name {
+    color: #f1f1f1;
 }
 .subscribe-wrapper {
     margin-left: auto;
@@ -193,6 +202,9 @@ body.dark .bell-btn {
     text-overflow: ellipsis;
     transition: max-height 0.3s ease;
     user-select: text;
+}
+body.dark .description-text {
+    color: #f1f1f1;
 }
 .description.expanded .description-text {
     max-height: 1000px;
@@ -286,19 +298,66 @@ body.dark .video-card {
     margin: 0 0 4px 0;
     line-height: 1.3;
 }
+body.dark .video-info .title {
+    color: #f1f1f1;
+}
 .video-info .channel-name {
     font-size: 13px;
     margin-left:50px;
     color: #606060;
 }
+body.dark .video-info .channel-name {
+    color: #aaa;
+}
 .video-info .meta {
     font-size: 12px;
     color: #909090;
 }
+body.dark .video-info .meta {
+    color: #888;
+}
 </style>
-<a href="{{ route('home') }}">homr</a>
+{{-- <a href="{{ route('home') }}">homr</a> --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // DARK MODE SETUP
+    const darkToggle = document.getElementById('darkToggle');
+    const body = document.body;
+
+    // Apply saved theme or system preference
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark');
+        if (darkToggle) {
+            darkToggle.querySelector('i').classList.remove('fa-moon');
+            darkToggle.querySelector('i').classList.add('fa-sun');
+        }
+    } else if (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        body.classList.add('dark');
+        if (darkToggle) {
+            darkToggle.querySelector('i').classList.remove('fa-moon');
+            darkToggle.querySelector('i').classList.add('fa-sun');
+        }
+    }
+
+    // Dark mode toggle functionality
+    function toggleDarkMode() {
+        body.classList.toggle('dark');
+        const icon = darkToggle.querySelector('i');
+        if (body.classList.contains('dark')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    if (darkToggle) {
+        darkToggle.addEventListener('click', toggleDarkMode);
+    }
+
     // Read more toggle (existing)
     const descriptionBox = document.querySelector('.description');
     const readMoreBtn = descriptionBox.querySelector('.read-more-btn');
