@@ -1,66 +1,141 @@
-
 <div class="header-center">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search" style="border-radiuse:50px;">
-            <button class="search-button"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="mic-button"><i class="fas fa-microphone"></i></div>
-    </div>
+    <form class="search-container" role="search"  method="GET" autocomplete="off">
+        <input
+            type="search"
+            name="q"
+            class="search-input"
+            placeholder="Search"
+            aria-label="Search"
+            {{-- value="{{ request('q') }}" --}}
+        />
+        <button type="submit" class="search-button" aria-label="Search">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+    <button class="mic-button" aria-label="Voice Search" type="button">
+        <i class="fas fa-microphone"></i>
+    </button>
+</div>
+
+@push('styles')
 <style>
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+/* Header center container */
+.header-center {
+    display: flex;
+    align-items: center;
+    flex: 0 1 728px;
+    margin: 0 40px;
+}
 
+/* Search form container */
+.search-container {
+    display: flex;
+    flex: 1;
+    max-width: 640px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+    background-color: #fff;
+    transition: box-shadow 0.3s;
+}
 
-/* Reset & body */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Roboto', Arial, sans-serif; background-color: #f9f9f9; color: #0f0f0f; transition: background-color 0.3s, color 0.3s; }
-body.dark { background-color: #0f0f0f; color: #f1f1f1; }
+.search-container:focus-within {
+    box-shadow: 0 0 8px #1a73e8;
+}
 
-/* Header */
-#header { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 56px; position: fixed; top: 0; left: 0; right: 0; background-color: #fff; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
-body.dark #header { background-color: #202020; border-bottom: 1px solid #303030; }
-.header-left, .header-center, .header-right { display: flex; align-items: center; }
-.header-center { flex: 0 1 728px; margin: 0 40px; }
-#sidebarToggle { padding: 8px; margin-right: 16px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-#sidebarToggle:hover { background-color: rgba(0,0,0,0.05); }
-body.dark #sidebarToggle:hover { background-color: rgba(255,255,255,0.1); }
-.logo { display: flex; align-items: center; font-size: 20px; font-weight: bold; color: #0f0f0f; }
-body.dark .logo { color: #f1f1f1; }
-.logo i { color: #ff0000; margin-right: 4px; }
-.search-container { display: flex; flex: 1; max-width: 640px; }
-.search-input { flex: 1; height: 40px; padding: 0 12px; border: 1px solid #ccc; border-radius: 22px 11 11 22px; font-size: 16px; background-color: #fff; }
-body.dark .search-input { background-color: #121212; border-color: #303030; color: #f1f1f1; }
-.search-button { height: 40px; width: 64px; border: 1px solid #d3d3d3; border-left: none; border-radius: 0 2px 2px 0; background-color: #f8f8f8; cursor: pointer; }
-body.dark .search-button { background-color: #303030; border-color: #303030; }
-.search-button:hover { background-color: #f0f0f0; }
-body.dark .search-button:hover { background-color: #404040; }
-.mic-button { margin-left: 8px; width: 40px; height: 40px; border-radius: 50%; background-color: #f8f8f8; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-body.dark .mic-button { background-color: #181818; }
-.header-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 8px; cursor: pointer; }
-.header-icon:hover { background-color: rgba(0,0,0,0.05); }
-body.dark .header-icon:hover { background-color: rgba(255,255,255,0.1); }
-.user-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: #ff0000; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-left: 8px; }
+/* Search input */
+.search-input {
+    flex: 1;
+    height: 40px;
+    border-radius:50px;
+    padding: 0 16px;
+    font-size: 16px;
+    outline: none;
+    color: #202020;
+}
 
-/* Sidebar */
-#sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; overflow-y: auto; transition: transform 0.3s ease; z-index: 999; padding-bottom: 12px; }
-body.dark #sidebar { background-color: #202020; }
-#sidebar.collapsed { transform: translateX(-100%); }
-.sidebar-section { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
-body.dark .sidebar-section { border-bottom-color: #303030; }
-.sidebar-item { display: flex; align-items: center; padding: 0 24px; height: 40px; cursor: pointer; font-size: 14px; color: #0f0f0f; }
-body.dark .sidebar-item { color: #f1f1f1; }
-.sidebar-item:hover { background-color: rgba(0,0,0,0.05); }
-body.dark .sidebar-item:hover { background-color: rgba(255,255,255,0.1); }
-.sidebar-item.active { background-color: rgba(0,0,0,0.1); font-weight: 500; }
-body.dark .sidebar-item.active { background-color: rgba(255,255,255,0.2); }
-.sidebar-item i { margin-right: 24px; width: 24px; text-align: center; }
-.sidebar-title { padding: 8px 24px; font-size: 14px; font-weight: 500; color: #606060; }
-body.dark .sidebar-title { color: #aaa; }
-.dark-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; cursor: pointer; }
+/* Search button */
+.search-button {
+    width: 64px;
+    background-color: #f8f8f8;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
 
-/* Main content */
+.search-button:hover {
+    background-color: #e0e0e0;
+}
 
-/* Responsive */
-@media (max-width: 1200px) { #main { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
-@media (max-width: 768px) { #main { margin-left: 200px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } .header-center { margin: 0 20px; } }
-@media (max-width: 576px) { #main { margin-left: 0; grid-template-columns: 1fr; padding: 16px; } .header-center { margin: 0 10px; } .search-container { display: none; } }
+.search-button i {
+    font-size: 18px;
+    color: #606060;
+}
+
+/* Microphone button */
+.mic-button {
+    margin-left: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f8f8f8;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.mic-button:hover {
+    background-color: #e0e0e0;
+}
+
+.mic-button i {
+    font-size: 18px;
+    color: #606060;
+}
+
+/* Dark mode support */
+body.dark .search-container {
+    background-color: #121212;
+    box-shadow: 0 1px 2px rgba(255 255 255 / 0.1);
+}
+
+body.dark .search-input {
+    background-color: transparent;
+    color: #eee;
+}
+
+body.dark .search-button {
+    background-color: #303030;
+}
+
+body.dark .search-button:hover {
+    background-color: #404040;
+}
+
+body.dark .search-button i,
+body.dark .mic-button i {
+    color: #ccc;
+}
+
+body.dark .mic-button {
+    background-color: #181818;
+}
+
+body.dark .mic-button:hover {
+    background-color: #282828;
+}
 </style>
+@endpush
