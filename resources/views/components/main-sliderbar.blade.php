@@ -107,10 +107,11 @@ $isDisplayPage = '';
         </div>
     </div>
 
-    <div class="dark-toggle sidebar-item" id="darkToggle" title="Dark Mode">
-        <i class="fas fa-moon"></i>
-        <span class="sidebar-text" id="darkmodetext">Dark Mode</span>
-    </div>
+  <div class="dark-toggle" id="darkToggle">
+    <span id="darkModeText">🌙 </span>
+    <i class="fas fa-moon"></i>
+</div>
+
 </div>
 
 @push('styles')
@@ -290,99 +291,80 @@ body.dark .sidebar-title {
 @endpush
 
 @push('scripts')
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('main');
     const darkToggle = document.getElementById('darkToggle');
+    const darkModeText = document.getElementById('darkModeText');
     const body = document.body;
 
-    // Get the default state from data attribute
-    const defaultOpen = sidebar.getAttribute('data-default-open') === 'true';
-    let sidebarExpanded = defaultOpen;
+    // ✅ 1. Detect current path
+    const isHomePage = window.location.pathname === '/';
 
-    // Initialize sidebar based on data attribute
-    function initializeSidebar() {
-        if(sidebarExpanded) {
+    // ✅ 2. Check localStorage or use default based on route
+    let sidebarExpanded = localStorage.getItem('sidebarExpanded') === 'true';
+
+    if (localStorage.getItem('sidebarExpanded') === null) {
+        sidebarExpanded = isHomePage; // default only open on "/"
+    }
+
+    // ✅ 3. Apply sidebar state
+    function updateSidebar() {
+        if (sidebarExpanded) {
             sidebar.classList.remove('mini-sidebar');
             sidebar.classList.add('full-sidebar');
-            if (main) {
-                main.classList.remove('mini-sidebar');
-                main.classList.add('full-sidebar');
-            }
+            main?.classList.remove('mini-sidebar');
+            main?.classList.add('full-sidebar');
         } else {
             sidebar.classList.remove('full-sidebar');
             sidebar.classList.add('mini-sidebar');
-            if (main) {
-                main.classList.remove('full-sidebar');
-                main.classList.add('mini-sidebar');
-            }
+            main?.classList.remove('full-sidebar');
+            main?.classList.add('mini-sidebar');
         }
     }
 
+    // ✅ 4. Toggle sidebar and save state
     function toggleSidebar() {
         sidebarExpanded = !sidebarExpanded;
-        if(sidebarExpanded) {
-            sidebar.classList.remove('mini-sidebar');
-            sidebar.classList.add('full-sidebar');
-            if (main) {
-                main.classList.remove('mini-sidebar');
-                main.classList.add('full-sidebar');
-            }
-        } else {
-            sidebar.classList.remove('full-sidebar');
-            sidebar.classList.add('mini-sidebar');
-            if (main) {
-                main.classList.remove('full-sidebar');
-                main.classList.add('mini-sidebar');
-            }
-        }
+        localStorage.setItem('sidebarExpanded', sidebarExpanded);
+        updateSidebar();
     }
 
-    // Apply saved theme or system preference
-    if (localStorage.getItem('theme') === 'dark') {
-        body.classList.add('dark');
-        if (darkToggle) {
-            darkToggle.querySelector('i').classList.remove('fa-moon');
-            darkToggle.querySelector('i').classList.add('fa-sun');
-        }
-    } else if (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        body.classList.add('dark');
-        if (darkToggle) {
-            darkToggle.querySelector('i').classList.remove('fa-moon');
-            darkToggle.querySelector('i').classList.add('fa-sun');
-        }
-    }
+    // ✅ 5. Apply theme from storage or system
+    const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = localStorage.getItem('theme') || (preferredDark ? 'dark' : 'light');
+    setTheme(theme);
 
-    // Dark mode toggle
-    function toggleDarkMode() {
-        body.classList.toggle('dark');
-        const icon = darkToggle.querySelector('i');
-        if (body.classList.contains('dark')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
+    function setTheme(mode) {
+        if (mode === 'dark') {
+            body.classList.add('dark');
+            darkToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            darkModeText.textContent = 'Light Mode';
             localStorage.setItem('theme', 'dark');
-            const darkmodetext = document.getElementById('darkmodetext').value;
-            darkmodetext.textContent = "Light Mode"
         } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
+            body.classList.remove('dark');
+            darkToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+            darkModeText.textContent = 'Dark Mode';
             localStorage.setItem('theme', 'light');
-            const darkmodetext = document.getElementById('darkmodetext').value;
-            darkmodetext.textContent = "Dark Mode"
         }
     }
 
-    // Active sidebar item handling
+    // ✅ 6. Toggle theme
+    function toggleDarkMode() {
+        const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
+        setTheme(newTheme);
+    }
+
+    // ✅ 7. Sidebar active item saving
     document.querySelectorAll('.sidebar-item').forEach(item => {
         item.addEventListener('click', () => {
             localStorage.setItem('activeSidebarItem', item.textContent.trim());
         });
     });
 
-    // On page load - set active item
+    // ✅ 8. Set previously active item
     const savedItem = localStorage.getItem('activeSidebarItem');
     if (savedItem) {
         document.querySelectorAll('.sidebar-item').forEach(item => {
@@ -394,16 +376,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialize sidebar on page load
-    initializeSidebar();
+    // ✅ 9. Initialize
+    updateSidebar();
 
-    // Event listeners
-    if (sidebarToggle) {
-        sidebarToggle.addEventListener('click', toggleSidebar);
-    }
-    if (darkToggle) {
-        darkToggle.addEventListener('click', toggleDarkMode);
-    }
+    // ✅ 10. Event Listeners
+    sidebarToggle?.addEventListener('click', toggleSidebar);
+    darkToggle?.addEventListener('click', toggleDarkMode);
 });
 </script>
 @endpush

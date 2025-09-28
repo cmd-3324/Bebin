@@ -1,5 +1,5 @@
 <div class="header-center">
-    <form class="search-container" role="search"  method="GET" autocomplete="off">
+    <form class="search-container" role="search"  method="GET" autocomplete="on">
         <input
             type="search"
             name="q"
@@ -54,10 +54,10 @@
 .search-input {
     flex: 1;
     height: 40px;
-    border-radius:50px;
+     border-radius: 50%;
     padding: 0 16px;
     font-size: 16px;
-    outline: none;
+    /* outline: none; */
     color: #202020;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .search-button i {
-    font-size: 18px;
+    font-size: 14px;
     color: #606060;
 }
 
