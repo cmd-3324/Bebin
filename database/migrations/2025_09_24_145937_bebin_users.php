@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create("bebin_users", function(Blueprint $table){
             $table->bigIncrements("UserID");
             $table->string("UserName");
-            $table->integer("Subscribers");
-            $table->integer("Video_num");
+            $table->integer("SubscribersNum")->default(0);
+            $table->integer('Age')->default(18);
+            $table->integer("Video_num")->default(0);
             $table->integer("comments_num");
             // $table->;
             $table->timestamps();

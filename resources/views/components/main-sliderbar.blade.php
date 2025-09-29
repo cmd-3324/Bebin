@@ -2,7 +2,7 @@
 @php
 $isDisplayPage = '';
 @endphp
-<div id="sidebar" class="mini-sidebar" data-default-open="{{ $isDisplayPage ? 'false' : 'true' }}">
+<div id="sidebar" class="mini-sidebar overflow-y-auto h-screen" data-default-open="{{ $isDisplayPage ? 'false' : 'true' }}">
     <div class="sidebar-section">
         {{-- Home with route --}}
         <a class="sidebar-item " title="Home">
@@ -385,3 +385,50 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+
+<div class="sidebar-section mt-4 px-4">
+    <div class="flex items-center justify-between">
+        <span class="sidebar-text">Dark Mode</span>
+        <label class="inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="theme-toggle" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700 rounded-full peer peer-checked:bg-blue-600 relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+        </label>
+    </div>
+</div>
+
+<script>
+    // Save & Restore Scroll Position
+    const slider = document.getElementById("sidebar");
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedScroll = localStorage.getItem("sidebarScroll");
+        if (savedScroll) slider.scrollTop = savedScroll;
+    });
+    slider.addEventListener("scroll", () => {
+        localStorage.setItem("sidebarScroll", slider.scrollTop);
+    });
+
+    // Dark Mode Toggle Switch
+    const themeToggle = document.getElementById("theme-toggle");
+    const root = document.documentElement;
+
+    // Apply saved theme
+    if (localStorage.getItem("theme") === "dark" || 
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        root.classList.add("dark");
+        themeToggle.checked = true;
+    } else {
+        root.classList.remove("dark");
+        themeToggle.checked = false;
+    }
+
+    // Toggle on switch
+    themeToggle.addEventListener("change", () => {
+        if (themeToggle.checked) {
+            root.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+        } else {
+            root.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+        }
+    });
+</script>
