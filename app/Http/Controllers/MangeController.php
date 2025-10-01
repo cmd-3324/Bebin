@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\ChartService;
 use App\Models\FavoriteCarPivot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
 class MangeController extends Controller
 {
     protected $videos = [
@@ -81,12 +80,13 @@ cbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     ];
 
     public function strema_video($id) {
+    if (1==1) {
         $video = collect($this->videos)->firstWhere('id', (int)$id);
 
         if (!$video) {
             abort(404, 'Video not found');
         }
-
+        $restrictionerror = "Nana";
         // Filter related videos (exclude current video)
         $relatedVideos = collect($this->videos)
             ->where('id', '!=', (int)$id)
@@ -95,8 +95,35 @@ cbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
         return view("video-card-display", [
             "video" => $video,
-            "relatedVideos" => $relatedVideos
+            "relatedVideos" => $relatedVideos,
+            'restrictionerror' =>$restrictionerror,
         ]);
     }
+
+} 
+//chart method name her  :uploadVideo
+public function upload(Request $request)
+{
+    // Check if file exists
+    if (!$request->hasFile('video')) {
+        return back()->with('error', 'Please select a video file');
+    }
+
+    $file = $request->file('video');
+
+    // Validate file type and size (increased to 100MB = 104857600 bytes)
+    $request->validate([
+        'video' => 'required|file|mimes:mp4,mov,avi,mkv,webm|max:104857600'
+    ]);
+
+    // Upload using ChartService
+    $path = ChartService::uploadVideo($file);
+
+    if ($path) {
+        return back()->with('success', 'Video uploaded successfully! File: ' . $file->getClientOriginalName());
+    } else {
+        return back()->with('error', 'Failed to upload video');
+    }
+}
 
 }

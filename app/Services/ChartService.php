@@ -2,11 +2,17 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ChartService
 {
-    // Your code here
+    public static function uploadVideo($file)
+    {
+        try {
+            // Store file and return the path
+            return $file->store('videos', 'public');
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

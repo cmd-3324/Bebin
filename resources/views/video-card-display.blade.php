@@ -5,8 +5,10 @@
 
 <div class="video-page">
     {{-- Main Video Player --}}
+
     <div class="video-main">
      <div class="player">
+   
     <iframe
         id="video-iframe"
         width="100%"
@@ -16,6 +18,12 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
     </iframe>
+  @if ($restrictionerror)
+        <div class="alert alert-warning">
+            {{ $restrictionerror }}
+        </div>
+    @else
+    @endif
 </div>
         {{-- Title and Actions container --}}
         <div class="title-actions">

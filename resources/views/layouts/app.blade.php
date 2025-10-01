@@ -22,16 +22,16 @@
 
     <!-- Main Content -->
     <div id="main">
-    @auth
+    {{-- @auth --}}
         <x-video-card />
-    @else
-        <p class="auth-warning">Please log in to view videos.</p>
-    @endauth
+    {{-- @else --}}
+        {{-- <p class="auth-warning">Please log in to view videos.</p> --}}
+    {{-- @endauth --}}
 </div>
 
 
-    @stack('scripts')
-<style>.auth-warning {
+    {{-- @stack('scripts') --}}
+{{-- <style>.auth-warning {
   max-width: 480px; /* YouTube video card width approx */
   margin-left: 500px;
   padding: 20px;
@@ -43,6 +43,6 @@
   color: #333;
   text-align: center;
 }
-</style>
+</style> --}}
 </body>
 </html>

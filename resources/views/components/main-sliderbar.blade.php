@@ -107,15 +107,239 @@ $isDisplayPage = '';
         </div>
     </div>
 
-  <div class="dark-toggle" id="darkToggle">
-    <span id="darkModeText">🌙 </span>
-    <i class="fas fa-moon"></i>
+    <!-- Physical Toggle Switch -->
+   <label class="switch">
+  <input type="checkbox" id="toggleTheme" />
+  <span class="slider"></span>
+</label>
 </div>
+<script>
+const toggle = document.getElementById('toggleTheme');
 
-</div>
-
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        });</script>
 @push('styles')
 <style>
+ body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark {
+            background-color: #121212;
+            color: #eee;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+/* Dark Mode Toggle Section */
+.dark-mode-section {
+    border-bottom: none !important;
+    margin-top: auto;
+    padding: 16px 0 !important;
+}
+
+.dark-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.dark-toggle-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dark-mode-icon {
+    color: #606060;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+body.dark .dark-mode-icon {
+    color: #aaa;
+}
+
+/* Physical Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.toggle-switch-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch-handle {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Checked state - Physical movement */
+.toggle-switch-input:checked + .toggle-switch-slider {
+    background-color: #2196F3;
+}
+
+.toggle-switch-input:checked + .toggle-switch-slider .toggle-switch-handle {
+    transform: translateX(26px);
+}
+
+/* Focus state for accessibility */
+.toggle-switch-input:focus + .toggle-switch-slider {
+    outline: 2px solid #2196F3;
+    outline-offset: 2px;
+}
+
+/* Hover effects */
+.toggle-switch:hover .toggle-switch-slider {
+    background-color: #b8b8b8;
+}
+
+.toggle-switch:hover .toggle-switch-input:checked + .toggle-switch-slider {
+    background-color: #1976D2;
+}
+
+.toggle-switch:hover .toggle-switch-handle {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Active state */
+.toggle-switch:active .toggle-switch-handle {
+    transform: scale(0.95);
+}
+
+.toggle-switch-input:checked:active + .toggle-switch-slider .toggle-switch-handle {
+    transform: translateX(26px) scale(0.95);
+}
+
+/* Dark mode specific adjustments */
+body.dark .toggle-switch-slider {
+    background-color: #555;
+}
+
+body.dark .toggle-switch:hover .toggle-switch-slider {
+    background-color: #666;
+}
+
+/* Mini Sidebar Adjustments */
+#sidebar.mini-sidebar .dark-toggle-wrapper {
+    justify-content: center;
+    padding: 0 20px;
+}
+
+#sidebar.mini-sidebar .dark-toggle-content {
+    justify-content: center;
+}
+
+#sidebar.mini-sidebar .sidebar-text {
+    display: none;
+}
+
+#sidebar.mini-sidebar .dark-toggle-wrapper:hover::after {
+    content: "Dark Mode";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-left: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark #sidebar.mini-sidebar .dark-toggle-wrapper:hover::after {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f0f0f;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Existing Sidebar Styles */
 #sidebar {
     position: fixed;
     top: 56px;
@@ -127,6 +351,8 @@ $isDisplayPage = '';
     z-index: 999;
     padding-bottom: 12px;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Mini Sidebar (Icons only) */
@@ -218,18 +444,22 @@ body.dark .sidebar-item.active {
     left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 8px 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 12px;
+    font-weight: 500;
     white-space: nowrap;
     z-index: 1000;
     margin-left: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 body.dark #sidebar.mini-sidebar .sidebar-item:hover::after {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     color: #0f0f0f;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-title {
@@ -241,14 +471,6 @@ body.dark #sidebar.mini-sidebar .sidebar-item:hover::after {
 }
 body.dark .sidebar-title {
     color: #aaa;
-}
-
-.dark-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-    cursor: pointer;
 }
 
 /* Adjust main content for sidebar states */
@@ -293,142 +515,100 @@ body.dark .sidebar-title {
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const main = document.getElementById('main');
-    const darkToggle = document.getElementById('darkToggle');
-    const darkModeText = document.getElementById('darkModeText');
+    const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
+    const toggleSwitch = themeToggle.closest('.toggle-switch');
 
-    // ✅ 1. Detect current path
-    const isHomePage = window.location.pathname === '/';
-
-    // ✅ 2. Check localStorage or use default based on route
-    let sidebarExpanded = localStorage.getItem('sidebarExpanded') === 'true';
-
-    if (localStorage.getItem('sidebarExpanded') === null) {
-        sidebarExpanded = isHomePage; // default only open on "/"
+    // System Preference Detection
+    function getSystemPreference() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
-    // ✅ 3. Apply sidebar state
-    function updateSidebar() {
-        if (sidebarExpanded) {
-            sidebar.classList.remove('mini-sidebar');
-            sidebar.classList.add('full-sidebar');
-            main?.classList.remove('mini-sidebar');
-            main?.classList.add('full-sidebar');
-        } else {
-            sidebar.classList.remove('full-sidebar');
-            sidebar.classList.add('mini-sidebar');
-            main?.classList.remove('full-sidebar');
-            main?.classList.add('mini-sidebar');
-        }
+    // Persistent Storage
+    function getStoredTheme() {
+        return localStorage.getItem('theme');
     }
 
-    // ✅ 4. Toggle sidebar and save state
-    function toggleSidebar() {
-        sidebarExpanded = !sidebarExpanded;
-        localStorage.setItem('sidebarExpanded', sidebarExpanded);
-        updateSidebar();
+    function setStoredTheme(theme) {
+        localStorage.setItem('theme', theme);
     }
 
-    // ✅ 5. Apply theme from storage or system
-    const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let theme = localStorage.getItem('theme') || (preferredDark ? 'dark' : 'light');
-    setTheme(theme);
+    // Initialize theme
+    function initializeTheme() {
+        const storedTheme = getStoredTheme();
+        const systemTheme = getSystemPreference();
 
-    function setTheme(mode) {
-        if (mode === 'dark') {
+        // Use stored theme if available, otherwise use system preference
+        const theme = storedTheme || systemTheme;
+
+        if (theme === 'dark') {
             body.classList.add('dark');
-            darkToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
-            darkModeText.textContent = 'Light Mode';
-            localStorage.setItem('theme', 'dark');
+            themeToggle.checked = true;
+            toggleSwitch.setAttribute('aria-checked', 'true');
         } else {
             body.classList.remove('dark');
-            darkToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
-            darkModeText.textContent = 'Dark Mode';
-            localStorage.setItem('theme', 'light');
+            themeToggle.checked = false;
+            toggleSwitch.setAttribute('aria-checked', 'false');
         }
     }
 
-    // ✅ 6. Toggle theme
-    function toggleDarkMode() {
-        const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
-        setTheme(newTheme);
+    // Toggle theme function
+    function toggleTheme() {
+        if (themeToggle.checked) {
+            body.classList.add('dark');
+            setStoredTheme('dark');
+            toggleSwitch.setAttribute('aria-checked', 'true');
+        } else {
+            body.classList.remove('dark');
+            setStoredTheme('light');
+            toggleSwitch.setAttribute('aria-checked', 'false');
+        }
     }
 
-    // ✅ 7. Sidebar active item saving
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-        item.addEventListener('click', () => {
-            localStorage.setItem('activeSidebarItem', item.textContent.trim());
-        });
+    // Initialize theme on page load
+    initializeTheme();
+
+    // Add event listener for theme toggle
+    themeToggle.addEventListener('change', toggleTheme);
+
+    // Keyboard accessibility
+    themeToggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            themeToggle.checked = !themeToggle.checked;
+            toggleTheme();
+        }
     });
 
-    // ✅ 8. Set previously active item
-    const savedItem = localStorage.getItem('activeSidebarItem');
-    if (savedItem) {
-        document.querySelectorAll('.sidebar-item').forEach(item => {
-            if (item.textContent.trim() === savedItem) {
-                item.classList.add('active');
+    // Listen for system theme changes (only if no user preference is stored)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!getStoredTheme()) {
+            if (e.matches) {
+                body.classList.add('dark');
+                themeToggle.checked = true;
+                toggleSwitch.setAttribute('aria-checked', 'true');
             } else {
-                item.classList.remove('active');
+                body.classList.remove('dark');
+                themeToggle.checked = false;
+                toggleSwitch.setAttribute('aria-checked', 'false');
             }
-        });
+        }
+    });
+
+    // Enhanced tooltip support for mini sidebar
+    function enhanceTooltips() {
+        const darkToggleWrapper = document.querySelector('.dark-toggle-wrapper');
+
+        if (darkToggleWrapper) {
+            darkToggleWrapper.addEventListener('mouseenter', function() {
+                if (document.getElementById('sidebar').classList.contains('mini-sidebar')) {
+                    // Tooltip is handled by CSS, but we can add additional functionality here if needed
+                }
+            });
+        }
     }
 
-    // ✅ 9. Initialize
-    updateSidebar();
-
-    // ✅ 10. Event Listeners
-    sidebarToggle?.addEventListener('click', toggleSidebar);
-    darkToggle?.addEventListener('click', toggleDarkMode);
+    enhanceTooltips();
 });
 </script>
 @endpush
-
-<div class="sidebar-section mt-4 px-4">
-    <div class="flex items-center justify-between">
-        <span class="sidebar-text">Dark Mode</span>
-        <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" id="theme-toggle" class="sr-only peer">
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 dark:bg-gray-700 rounded-full peer peer-checked:bg-blue-600 relative after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-        </label>
-    </div>
-</div>
-
-<script>
-    // Save & Restore Scroll Position
-    const slider = document.getElementById("sidebar");
-    document.addEventListener("DOMContentLoaded", () => {
-        const savedScroll = localStorage.getItem("sidebarScroll");
-        if (savedScroll) slider.scrollTop = savedScroll;
-    });
-    slider.addEventListener("scroll", () => {
-        localStorage.setItem("sidebarScroll", slider.scrollTop);
-    });
-
-    // Dark Mode Toggle Switch
-    const themeToggle = document.getElementById("theme-toggle");
-    const root = document.documentElement;
-
-    // Apply saved theme
-    if (localStorage.getItem("theme") === "dark" || 
-        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        root.classList.add("dark");
-        themeToggle.checked = true;
-    } else {
-        root.classList.remove("dark");
-        themeToggle.checked = false;
-    }
-
-    // Toggle on switch
-    themeToggle.addEventListener("change", () => {
-        if (themeToggle.checked) {
-            root.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-        } else {
-            root.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-        }
-    });
-</script>

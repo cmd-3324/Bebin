@@ -1,5 +1,5 @@
 <div class="header-center">
-    <form class="search-container" role="search"  method="GET" autocomplete="on">
+    <form class="search-container" role="search" method="GET" autocomplete="on">
         <input
             type="search"
             name="q"
@@ -32,6 +32,7 @@
     align-items: center;
     flex: 0 1 728px;
     margin: 0 40px;
+    justify-content: center;
 }
 
 /* Search form container */
@@ -39,52 +40,70 @@
     display: flex;
     flex: 1;
     max-width: 640px;
-    border-radius: 24px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 40px 0 0 40px;
     overflow: hidden;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
     background-color: #fff;
-    transition: box-shadow 0.3s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-container:focus-within {
-    box-shadow: 0 0 8px #1a73e8;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 1px #1a73e8;
 }
 
 /* Search input */
 .search-input {
     flex: 1;
-    height: 40px;
-     border-radius: 50%;
+    height: 100%;
     padding: 0 16px;
     font-size: 16px;
-    /* outline: none; */
-    color: #202020;
+    border: none;
+    outline: none;
+    color: #0f0f0f;
+    background-color: transparent;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.search-input::placeholder {
+    color: #606060;
+    font-weight: 400;
 }
 
 /* Search button */
 .search-button {
     width: 64px;
+    height: 40px;
     background-color: #f8f8f8;
-    border: none;
+    border: 1px solid #d3d3d3;
+    border-left: none;
+    border-radius: 0 40px 40px 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
+    margin: 0;
+    padding: 0;
 }
 
 .search-button:hover {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
+}
+
+.search-button:active {
+    background-color: #e5e5e5;
 }
 
 .search-button i {
-    font-size: 14px;
+    font-size: 18px;
     color: #606060;
 }
 
 /* Microphone button */
 .mic-button {
-    margin-left: 8px;
+    margin-left: 12px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -94,11 +113,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
 }
 
 .mic-button:hover {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
+}
+
+.mic-button:active {
+    background-color: #e5e5e5;
 }
 
 .mic-button i {
@@ -109,25 +132,38 @@
 /* Dark mode support */
 body.dark .search-container {
     background-color: #121212;
-    box-shadow: 0 1px 2px rgba(255 255 255 / 0.1);
+    border-color: #303030;
+}
+
+body.dark .search-container:focus-within {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 1px #1a73e8;
 }
 
 body.dark .search-input {
     background-color: transparent;
-    color: #eee;
+    color: #f1f1f1;
+}
+
+body.dark .search-input::placeholder {
+    color: #aaa;
 }
 
 body.dark .search-button {
     background-color: #303030;
+    border-color: #303030;
 }
 
 body.dark .search-button:hover {
     background-color: #404040;
 }
 
-body.dark .search-button i,
-body.dark .mic-button i {
-    color: #ccc;
+body.dark .search-button:active {
+    background-color: #505050;
+}
+
+body.dark .search-button i {
+    color: #f1f1f1;
 }
 
 body.dark .mic-button {
@@ -136,6 +172,45 @@ body.dark .mic-button {
 
 body.dark .mic-button:hover {
     background-color: #282828;
+}
+
+body.dark .mic-button:active {
+    background-color: #383838;
+}
+
+body.dark .mic-button i {
+    color: #f1f1f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-center {
+        margin: 0 20px;
+    }
+    
+    .search-container {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-center {
+        margin: 0 10px;
+    }
+    
+    .search-container {
+        max-width: 300px;
+    }
+    
+    .mic-button {
+        margin-left: 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    .search-container {
+        max-width: 200px;
+    }
 }
 </style>
 @endpush

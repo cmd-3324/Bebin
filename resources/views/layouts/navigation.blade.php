@@ -1,6 +1,10 @@
 <!-- Header -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-@section('title', "")
+<link rel="stylesheet" href="{{ asset('css/navCss.css') }}">
+
+<!-- Sidebar Component -->
+<x-main-sliderbar />
+@section('title', "Main-Page")
 <div id="header">
     <div class="header-left">
         <div id="sidebarToggle" class="header-icon"><i class="fas fa-bars"></i></div>
@@ -9,371 +13,311 @@
     <x-search-form/>
 
     <div class="header-right">
-        <div class="upload-button">
-            <span class="plus">+</span>
-            <span>Upload</span>
-            <div class="header-icon">
-                <i class="fas fa-video"></i>
-            </div>
-        </div>
+<div class="header-right">
+    <!-- Upload Form -->
+    <form method="POST" action="{{ route('upload.video.post') }}" enctype="multipart/form-data" style="display: inline-block;">
+        @csrf
+        <input type="file" name="video" id="videoInput" accept="video/*" style="display: none;" onchange="this.form.submit()">
+        <button type="button" class="upload-button" onclick="document.getElementById('videoInput').click()">
+            <span>+</span> Upload Video
+        </button>
+    </form>
+
+    <!-- Display Messages -->
+    @if(session('success'))
+        <script>alert('✅ {{ session('success') }}');</script>
+    @endif
+
+    @if(session('error'))
+        <script>alert('❌ {{ session('error') }}');</script>
+    @endif
+
+    <!-- Rest of your notifications code... -->
+</div>
+
+
+
         @auth
             @if (Auth::user()->UserName)
-            <div class="header-icon"><i class="fas fa-bell"></i></div>
+            <div class="notification-container">
+                <div class="header-icon notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <div class="notification-settings">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                    </div>
+                    <div class="notification-list">
+                        <div class="notification-item">
+                            <div class="notification-avatar">C</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Coding Master</div>
+                                <div class="notification-text">uploaded a new video: "Learn JavaScript in 1 Hour"</div>
+                                <div class="notification-time">2 hours ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">T</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Tech Reviews</div>
+                                <div class="notification-text">uploaded a new video: "iPhone 15 Pro Max Review"</div>
+                                <div class="notification-time">1 day ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">G</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Gaming World</div>
+                                <div class="notification-text">uploaded a new video: "GTA 6 Gameplay Leaks"</div>
+                                <div class="notification-time">3 days ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">M</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Music Vibes</div>
+                                <div class="notification-text">uploaded a new video: "Top 10 Songs of 2023"</div>
+                                <div class="notification-time">1 week ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">F</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Food Network</div>
+                                <div class="notification-text">uploaded a new video: "5 Minute Healthy Breakfast"</div>
+                                <div class="notification-time">2 weeks ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <a href="#" class="view-all">View all notifications</a>
+                    </div>
+                </div>
+            </div>
             <div class="user-avatar">{{ substr(Auth::user()->UserName, 0, 1) }}</div>
             @else
-            <div class="header-icon"><i class="fas fa-bell"></i></div>
+            <div class="notification-container">
+                <div class="header-icon notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="notification-dropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <div class="notification-settings">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                    </div>
+                    <div class="notification-list">
+                        <div class="notification-item">
+                            <div class="notification-avatar">C</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Coding Master</div>
+                                <div class="notification-text">uploaded a new video: "Learn JavaScript in 1 Hour"</div>
+                                <div class="notification-time">2 hours ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">T</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Tech Reviews</div>
+                                <div class="notification-text">uploaded a new video: "iPhone 15 Pro Max Review"</div>
+                                <div class="notification-time">1 day ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-avatar">G</div>
+                            <div class="notification-content">
+                                <div class="notification-channel">Gaming World</div>
+                                <div class="notification-text">uploaded a new video: "GTA 6 Gameplay Leaks"</div>
+                                <div class="notification-time">3 days ago</div>
+                            </div>
+                            <div class="notification-thumbnail"></div>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <a href="#" class="view-all">View all notifications</a>
+                    </div>
+                </div>
+            </div>
             <div class="guest-avatar">
                 <i class="fas fa-user-circle"></i>
             </div>
             @endif
         @else
-       <div class="header-icon"><i class="fas fa-bell"></i></div>
-<div class="guest-avatar">
-  <i class="fas fa-user-circle"></i>
-  <span class="guest-text">Guest</span>
-</div>
-
+        <div class="notification-container">
+            <div class="header-icon notification-icon">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">3</span>
+            </div>
+            <div class="notification-dropdown">
+                <div class="notification-header">
+                    <h3>Notifications</h3>
+                    <div class="notification-settings">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                </div>
+                <div class="notification-list">
+                    <div class="notification-item">
+                        <div class="notification-avatar">C</div>
+                        <div class="notification-content">
+                            <div class="notification-channel">Coding Master</div>
+                            <div class="notification-text">uploaded a new video: "Learn JavaScript in 1 Hour"</div>
+                            <div class="notification-time">2 hours ago</div>
+                        </div>
+                        <div class="notification-thumbnail"></div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-avatar">T</div>
+                        <div class="notification-content">
+                            <div class="notification-channel">Tech Reviews</div>
+                            <div class="notification-text">uploaded a new video: "iPhone 15 Pro Max Review"</div>
+                            <div class="notification-time">1 day ago</div>
+                        </div>
+                        <div class="notification-thumbnail"></div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-avatar">G</div>
+                        <div class="notification-content">
+                            <div class="notification-channel">Gaming World</div>
+                            <div class="notification-text">uploaded a new video: "GTA 6 Gameplay Leaks"</div>
+                            <div class="notification-time">3 days ago</div>
+                        </div>
+                        <div class="notification-thumbnail"></div>
+                    </div>
+                </div>
+                <div class="notification-footer">
+                    <a href="#" class="view-all">View all notifications</a>
+                </div>
+            </div>
+        </div>
+        <div class="guest-avatar">
+            <i class="fas fa-user-circle"></i>
+            <span class="guest-text">Guest</span>
+        </div>
         @endauth
     </div>
 </div>
 
-<!-- Sidebar Component -->
-<x-main-sliderbar />
-
-<style>
-/* Reset & body */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Roboto', Arial, sans-serif; background-color: #f9f9f9; color: #0f0f0f; transition: background-color 0.3s, color 0.3s; }
-body.dark { background-color: #0f0f0f; color: #f1f1f1; }
-
-/* Header */
-#header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    height: 56px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    border-bottom: 1px solid #e5e5e5;
-    z-index: 1000;
-}
-body.dark #header {
-    background-color: #202020;
-    border-bottom: 1px solid #303030;
-}
-.header-left, .header-center, .header-right {
-    display: flex;
-    align-items: center;
-}
-.header-center {
-    flex: 0 1 728px;
-    margin: 0 40px;
-}
-#sidebarToggle {
-    padding: 8px;
-    margin-right: 16px;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#sidebarToggle:hover {
-    background-color: rgba(0,0,0,0.05);
-}
-body.dark #sidebarToggle:hover {
-    background-color: rgba(255,255,255,0.1);
-}
-.logo {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #0f0f0f;
-}
-body.dark .logo {
-    color: #f1f1f1;
-}
-.logo i {
-    color: #ff0000;
-    margin-right: 4px;
-}
-.search-container {
-    display: flex;
-    flex: 1;
-    max-width: 640px;
-}
-.search-input {
-    flex: 1;
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid #ccc;
-    border-radius: 2px 0 0 2px;
-    font-size: 16px;
-    background-color: #fff;
-}
-body.dark .search-input {
-    background-color: #121212;
-    border-color: #303030;
-    color: #f1f1f1;
-}
-.search-button {
-    height: 40px;
-    width: 64px;
-    border: 1px solid #d3d3d3;
-    border-left: none;
-    border-radius: 0 2px 2px 0;
-    background-color: #f8f8f8;
-    cursor: pointer;
-}
-body.dark .search-button {
-    background-color: #303030;
-    border-color: #303030;
-}
-.search-button:hover {
-    background-color: #f0f0f0;
-}
-body.dark .search-button:hover {
-    background-color: #404040;
-}
-.mic-button {
-    margin-left: 8px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #f8f8f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-body.dark .mic-button {
-    background-color: #181818;
-}
-.upload-button {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: 14px;
-    color: #0f0f0f;
-    cursor: pointer;
-    user-select: none;
-    gap: 6px;
-}
-body.dark .upload-button {
-    color: #f1f1f1;
-}
-.upload-button .plus {
-    font-weight: bold;
-    font-size: 18px;
-    color: #ff0000;
-}
-.header-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 8px;
-    cursor: pointer;
-}
-.header-icon:hover {
-    background-color: rgba(0,0,0,0.05);
-}
-body.dark .header-icon:hover {
-    background-color: rgba(255,255,255,0.1);
-}
-.user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #ff0000;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-left: 8px;
-    font-size: 14px;
-}
-
-/* Guest Avatar Styles */
-.guest-avatar {
-    display: inline-flex;        /* inline-flex so it fits nicely in header */
-    align-items: center;
-    gap: 6px;                    /* space between icon and text */
-    padding: 0 8px;              /* add some horizontal padding */
-    height: 32px;
-    border-radius: 16px;         /* rounded pill shape */
-    background-color: transparent;
-    color: #606060;
-    cursor: pointer;
-    font-size: 20px;             /* smaller icon to fit text */
-    transition: color 0.2s ease;
-    user-select: none;
-}
-
-.guest-avatar i {
-    font-size: 24px;             /* keep icon slightly bigger */
-}
-
-.guest-avatar:hover {
-    color: #ff0000;
-}
-
-body.dark .guest-avatar {
-    color: #aaa;
-}
-
-body.dark .guest-avatar:hover {
-    color: #ff4444;
-}
-
-/* Sidebar */
-#sidebar {
-    position: fixed;
-    top: 56px;
-    left: 0;
-    width: 240px;
-    height: calc(100vh - 56px);
-    background-color: #fff;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
-    z-index: 999;
-    padding-bottom: 12px;
-}
-body.dark #sidebar {
-    background-color: #202020;
-}
-#sidebar.collapsed {
-    transform: translateX(-100%);
-}
-.sidebar-section {
-    padding: 12px 0;
-    border-bottom: 1px solid #e5e5e5;
-}
-body.dark .sidebar-section {
-    border-bottom-color: #303030;
-}
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 0 24px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #0f0f0f;
-    text-decoration: none;
-}
-body.dark .sidebar-item {
-    color: #f1f1f1;
-}
-.sidebar-item:hover {
-    background-color: rgba(0,0,0,0.05);
-}
-body.dark .sidebar-item:hover {
-    background-color: rgba(255,255,255,0.1);
-}
-.sidebar-item.active {
-    background-color: rgba(0,0,0,0.1);
-    font-weight: 500;
-}
-body.dark .sidebar-item.active {
-    background-color: rgba(255,255,255,0.2);
-}
-.sidebar-item i {
-    margin-right: 24px;
-    width: 24px;
-    text-align: center;
-}
-.sidebar-title {
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #606060;
-}
-body.dark .sidebar-title {
-    color: #aaa;
-}
-.dark-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-    cursor: pointer;
-}
-
-/* Main content */
-#main {
-    margin-top: 56px;
-    margin-left: 240px;
-    padding: 24px;
-    transition: margin-left 0.3s;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-}
-#main.sidebar-collapsed {
-    margin-left: 0;
-}
-.video-card {
-    background-color: #e5e5e5;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    border-radius: 4px;
-}
-body.dark .video-card {
-    background-color: #303030;
-    color: #f1f1f1;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    #main {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-}
-@media (max-width: 768px) {
-    #main {
-        margin-left: 200px;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-    .header-center {
-        margin: 0 20px;
-    }
-}
-@media (max-width: 576px) {
-    #main {
-        margin-left: 0;
-        grid-template-columns: 1fr;
-        padding: 16px;
-    }
-    .header-center {
-        margin: 0 10px;
-    }
-    .search-container {
-        display: none;
-    }
-}
-</style>
+<!-- Voice Search Modal -->
+<div id="voiceSearchModal" class="voice-modal">
+    <div class="voice-modal-content">
+        <div class="voice-modal-header">
+            <h3>Voice Search</h3>
+            <button class="voice-modal-close">&times;</button>
+        </div>
+        <div class="voice-modal-body">
+            <div class="voice-animation">
+                <div class="voice-pulse"></div>
+                <i class="fas fa-microphone"></i>
+            </div>
+            <p class="voice-instruction">Speak now...</p>
+            <p class="voice-status">Listening...</p>
+        </div>
+    </div>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('main');
+    const micButtons = document.querySelectorAll('.mic-button');
+    const searchInput = document.querySelector('.search-input');
+    const voiceSearchModal = document.getElementById('voiceSearchModal');
+    const voiceModalClose = document.querySelector('.voice-modal-close');
+    const voiceStatus = document.querySelector('.voice-status');
+    const voiceInstruction = document.querySelector('.voice-instruction');
 
     let sidebarOpen = false;
+    let recognition = null;
+    let isListening = false;
 
-    // Only handle sidebar toggle - dark mode is handled in sidebar component
+    // Check if browser supports speech recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    // Initialize speech recognition
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = function() {
+            isListening = true;
+            voiceStatus.textContent = 'Listening...';
+            voiceInstruction.textContent = 'Speak now...';
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            if (searchInput) {
+                searchInput.value = transcript;
+                // Trigger input event for any listeners
+                searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            closeVoiceModal();
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            voiceStatus.textContent = 'Error: ' + event.error;
+            voiceInstruction.textContent = 'Click microphone to try again';
+            isListening = false;
+        };
+
+        recognition.onend = function() {
+            isListening = false;
+            if (voiceStatus.textContent === 'Listening...') {
+                voiceStatus.textContent = 'No speech detected';
+                voiceInstruction.textContent = 'Click microphone to try again';
+            }
+        };
+    }
+
+    // Voice search functionality
+    function startVoiceSearch() {
+        if (!recognition) {
+            alert('Your browser does not support voice search. Please use Chrome, Edge, or Safari.');
+            return;
+        }
+
+        showVoiceModal();
+
+        try {
+            recognition.start();
+        } catch (error) {
+            console.error('Error starting speech recognition:', error);
+            voiceStatus.textContent = 'Error starting voice search';
+            voiceInstruction.textContent = 'Please try again';
+        }
+    }
+
+    function showVoiceModal() {
+        voiceSearchModal.style.display = 'flex';
+        voiceStatus.textContent = 'Listening...';
+        voiceInstruction.textContent = 'Speak now...';
+    }
+
+    function closeVoiceModal() {
+        voiceSearchModal.style.display = 'none';
+        if (recognition && isListening) {
+            recognition.stop();
+        }
+    }
+
+    // Sidebar toggle functionality
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', function() {
             sidebarOpen = !sidebarOpen;
@@ -386,5 +330,61 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // Notification dropdown functionality
+    const notificationIcons = document.querySelectorAll('.notification-icon');
+    const notificationDropdowns = document.querySelectorAll('.notification-dropdown');
+
+    notificationIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = this.closest('.notification-container').querySelector('.notification-dropdown');
+            const isVisible = dropdown.classList.contains('show');
+
+            // Close all dropdowns first
+            notificationDropdowns.forEach(d => d.classList.remove('show'));
+
+            // Toggle current dropdown
+            if (!isVisible) {
+                dropdown.classList.add('show');
+            }
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function() {
+        notificationDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+    });
+
+    // Prevent dropdown from closing when clicking inside it
+    notificationDropdowns.forEach(dropdown => {
+        dropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Event listeners for voice search
+    micButtons.forEach(button => {
+        button.addEventListener('click', startVoiceSearch);
+    });
+
+    voiceModalClose.addEventListener('click', closeVoiceModal);
+
+    // Close modal when clicking outside
+    voiceSearchModal.addEventListener('click', function(e) {
+        if (e.target === voiceSearchModal) {
+            closeVoiceModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeVoiceModal();
+        }
+    });
 });
 </script>
+
