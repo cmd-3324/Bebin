@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\ChartService;
-use App\Models\FavoriteCarPivot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class MangeController extends Controller
@@ -126,4 +127,38 @@ public function upload(Request $request)
     }
 }
 
+public function sendme(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email',
+        'message' => 'required|string'
+    ]);
+    //Random 5-d code : 
+   
+
+//"Name: {$validated['name']}\r\n" "Email: {$validated['email']}\r\n\r\n"
+    try {
+      
+        Mail::send([], [], function ($message) use ($validated) {
+            $verificationCode = random_int(100000, 999999);
+            $text =  "Message:\r\n{$validated['message']}\r\n Your code is : $verificationCode";
+
+            $message->to('programmers378@gmail.com')
+                    ->subject("Dear:{$validated['name']}")
+                    ->from(config('mail.from.address'), config('mail.from.name'))
+                    ->replyTo($validated['email'], $validated['name'])
+                    ->text($text); // ✅ plain text only
+        });
+
+        return redirect()
+            ->back()
+            ->with('successmessage', '✅ Message sent successfully!');
+    } catch (\Exception $e) {
+        return redirect()
+            ->back()
+            ->with('errormessage', '❌ Failed to send: ' . $e->getMessage());
+    }
+}
+    
 }

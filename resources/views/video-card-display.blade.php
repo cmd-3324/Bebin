@@ -2,7 +2,10 @@
 {{-- Implementation of slider and nav --}}
 @include('layouts.navigation')
 
-
+<header>
+<link rel="stylesheet" type="style/css" href="">
+<title>Watch In Bebin</title>
+</header>
 <div class="video-page">
     {{-- Main Video Player --}}
 

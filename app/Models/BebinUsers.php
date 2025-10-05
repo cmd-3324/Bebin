@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
-class BebinUsers extends Authenticatable
+use Illuminate\Contacts\Auth\MustverifyEmailCode;
+//implements MustverifyEmailCode
+class BebinUsers extends Authenticatable 
 {
     use Notifiable;
 
@@ -16,12 +17,26 @@ class BebinUsers extends Authenticatable
 
     protected $fillable = [
         'UserName',
+        'email',
+        'password',
         'SubscribersNum',
         'Age',
         'Video_num',
         'comments_num',
     ];
+     protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
     public function videos()
     {
         return $this->hasMany(VideoStorageMetadata::class, 'UserID', 'UserID');

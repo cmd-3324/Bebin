@@ -15,7 +15,7 @@ Route::get('/dashboard', function () {
 Route::fallback(function () {
     return 'This page is not created yet';
 });
-
+Route::view("/register","auth.register");
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -27,6 +27,7 @@ Route::get('/video-watching/{id}', [MangeController::class, 'strema_video'])->na
 Route::get('/home', function () {
     return view('layouts.app');
 })->name('home');
-
+// Route for test email send-email
+Route::post("/emai", [MangeController::class, "sendme"])->name("send.email");
 Route::post('/uploaded', [MangeController::class, 'upload'])->name('upload.video.post');
 require __DIR__.'/auth.php';
