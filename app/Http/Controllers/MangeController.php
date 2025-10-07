@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\ChartService;
+use App\Models\BebinUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class MangeController extends Controller
@@ -161,4 +163,58 @@ public function sendme(Request $request)
     }
 }
     
+// START: Rewritten sendCode method
+ // ✅ UPDATED sendCode (AJAX-friendly)
+public function sendCode(Request $request)
+{
+    $request->validate(['email' => 'required|email']);
+    $userEmail = $request->email;
+
+    // Generate and store in cache
+    $code = random_int(100000, 999999);
+    Cache::put("verification_code:$userEmail", $code, now()->addMinutes(1));
+
+    try {
+        Mail::raw("Your verification code is: {$code}", function ($msg) use ($userEmail) {
+            $msg->to($userEmail)
+                ->subject('Your Email Verification Code');
+        });
+        session()->put('code_sent_at', time());
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
+
+// ✅ UPDATED verifyCode (used on Register submit)
+public function verifyCode(Request $request)
+{
+    $request->validate([
+        'UserName' => 'required|string|max:255',
+        'email' => 'required|email',
+        'password' => 'required|min:6|confirmed',
+        'code' => 'required|digits:6',
+    ]);
+    
+    $cacheKey = "verification_code:{$request->email}";
+    $storedCode = Cache::get($cacheKey);
+    if (!$storedCode || $storedCode != $request->code) {
+        return back()->withErrors(['code' => 'Invalid or expired code.'])->
+        withInput($request->only('password'));
+    }
+    $user = BebinUsers::create([
+        'UserName' => $request->UserName,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'email_verified_at' => now(),
+    ]);
+    Auth::login($user);
+    // Clear cache + timer
+    Cache::forget($cacheKey);
+    session()->forget('code_sent_at');
+
+    return redirect()->route('home');
+}
+
+    // END: Rewritten verifyCode method
 }
