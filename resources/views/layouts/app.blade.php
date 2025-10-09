@@ -13,6 +13,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         @stack('styles')
+<script>
+    localStorage.removeItem('register_email');
+    localStorage.removeItem('register_username');
+    localStorage.removeItem('register_code');
+    localStorage.removeItem('register_password');
+    localStorage.removeItem('register_password_confirm');
+    localStorage.removeItem('verification_resend_expiry');
+</script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

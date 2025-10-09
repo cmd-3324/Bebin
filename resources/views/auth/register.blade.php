@@ -1,5 +1,5 @@
 <x-guest-layout>
-    
+
     <form method="POST" action="{{ route('verification.verify') }}">
         @csrf
 
@@ -39,7 +39,10 @@
                           type="password" name="password_confirmation" required />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
-        
+        {{-- Already registered  --}}
+      <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                {{ __('Already registered?') }}
+            </a>
         {{-- REGISTER BUTTON --}}
         <div class="flex items-center justify-end mt-4">
             <x-primary-button class="ms-4">
