@@ -7,7 +7,7 @@ $isDisplayPage = '';
         {{-- Home with route --}}
         <a class="sidebar-item " title="Home">
             <i class="fas fa-home"></i>
-            <span class="sidebar-text">Home</span>
+            <span class="sidebar-text"><a href="{{route("home")}}">Home</a></span>
         </a>
 
         {{-- The rest unchanged --}}
@@ -24,7 +24,7 @@ $isDisplayPage = '';
     <div class="sidebar-section">
         {{-- Always show "You" section --}}
         <div class="sidebar-title">
-            <span class="sidebar-text">You ></span>
+            <span class="sidebar-text"><a href="{{ route("gettoChannelPage") }}">You ></a></span>
         </div>
         <div class="sidebar-item" title="Library">
             <i class="fas fa-folder"></i>
@@ -123,7 +123,8 @@ const toggle = document.getElementById('toggleTheme');
                 document.body.classList.remove('dark');
             }
         });</script>
-@push('styles')
+{{-- @push('styles') --}}
+
 <style>
  body {
             font-family: Arial, sans-serif;
@@ -510,7 +511,7 @@ body.dark .sidebar-title {
     }
 }
 </style>
-@endpush
+{{-- @endpush --}}
 
 @push('scripts')
 <script>

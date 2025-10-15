@@ -8,6 +8,7 @@
             <x-input-label for="UserName" :value="__('UserName')" />
             <x-text-input id="UserName" class="block mt-1 w-full"
                           type="text" name="UserName"
+
                           :value="old('UserName')" required autofocus />
             <x-input-error :messages="$errors->get('UserName')" class="mt-2" />
         </div>
@@ -27,7 +28,7 @@
         {{-- PASSWORD --}}
         <div class="mt-4">
             <x-input-label for="password" :value="__('password')" />
-            <x-text-input id="password" class="block mt-1 w-full" value="{{ old('password') }}"
+            <x-text-input id="password" class="block mt-1 w-full" 
                           type="password" name="password" required />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -40,9 +41,7 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
         {{-- Already registered  --}}
-      <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+
         {{-- REGISTER BUTTON --}}
         <div class="flex items-center justify-end mt-4">
             <x-primary-button class="ms-4">

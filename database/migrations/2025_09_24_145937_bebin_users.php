@@ -15,6 +15,7 @@ return new class extends Migration
         $table->bigIncrements("UserID");
         $table->string("UserName");
         $table->string("password");
+        $table->string("ProfiltoPath");
         $table->string("email");
         $table->integer("SubscribersNum")->default(0);
         $table->integer('Age')->default(18);

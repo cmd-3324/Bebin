@@ -15,8 +15,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('videoPath');
             $table->string('OriginalFilename')->nullable();
+            $table->float("Views");
+            $table->float("Likes");
+            $table->boolean("IsRestricted");
+            $table->float("Dislikes");
+            $table->integer("Downloads");
             $table->timestamps();
-
             $table->foreign('UserID')->references('UserID')->on('bebin_users')->onDelete('cascade');
         });
     }

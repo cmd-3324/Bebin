@@ -14,6 +14,10 @@ class VideoStorageMetadata extends Model
         'description',
         'videoPath',
         'OriginalFilename',
+        'Downloads',
+        'Likes',
+        'IsRestricted',
+        'Dislikes',
     ];
 
     public function user()

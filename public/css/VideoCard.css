@@ -1,0 +1,234 @@
+/* ========== YOUTUBE-STYLE VIDEO CARD ========== */
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #0f0f0f;
+    font-family: "Roboto", "Arial", sans-serif;
+    cursor: pointer;
+    height: 250px;
+    transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+}
+
+
+/* ---- Thumbnail ---- */
+
+.thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.video-card:hover .thumbnail img {
+    transform: scale(1.05);
+}
+
+.thumbnail .duration {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+
+/* ---- Info Section ---- */
+
+.video-details {
+    display: flex;
+    margin-top: 10px;
+}
+
+.channel-avatar img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.info .title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    color: #0f0f0f;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.info .channel-name {
+    font-size: 13px;
+    color: #606060;
+    margin-bottom: 2px;
+}
+
+.info .meta {
+    font-size: 12px;
+    color: #121010;
+}
+
+
+/* ---- Dark Mode (optional) ---- */
+
+body.dark .video-card {
+    color: #f1f1f1;
+}
+
+body.dark .info .channel-name {
+    color: #f1ebeb;
+}
+
+body.dark .info .meta {
+    color: #f1ebeb;
+}
+
+body.dark .info .title {
+    color: #f1ebeb;
+}
+
+
+/* 3 dots menu styles */
+
+.menu-container {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.menu-btn {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px;
+}
+
+.menu-btn .dot {
+    width: 4px;
+    height: 4px;
+    background-color: #606060;
+    border-radius: 50%;
+}
+
+.menu {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: none;
+    flex-direction: column;
+    min-width: 120px;
+    z-index: 10;
+}
+
+.menu-item {
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #121010;
+}
+
+.menu-item:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* Show menu when checkbox checked */
+
+.menu-toggle:checked+.menu-btn+.menu {
+    display: flex;
+}
+
+.menu-btn {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 8px;
+    color: #606060;
+}
+
+.menu-btn:hover {
+    color: #000;
+}
+
+.menu-btn {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 8px;
+    color: #606060;
+}
+
+.menu-btn:hover {
+    color: #000;
+}
+
+
+/*
+w = 9.26 h=8.26 --w-9.21 h=8.49 ---->(main - w-340 h=319px --tuhbmain = 340-191 
+ | title = 299 - 44 | distance of title and channel avatar = | 
+total meta data section of each video = 340 88 --channel profile =36px-36 --
+-date(how many h/days/month/ or years passed ) =68-20 ---
+ */.video-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #0f0f0f;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.new-badge {
+    background-color: #ff0000;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+    animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}

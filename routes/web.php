@@ -9,6 +9,9 @@ Route::get('/', function () {
 });
 Route::post("/send-verification-code", [MangeController::class, "sendCode"])->name("verification.send");
 Route::post("/verify-code", [MangeController::class, "verifyCode"])->name("verification.verify");
+
+Route::get('/gettoChannelPage', fn() => view('ChannelIndex'))->name('gettoChannelPage');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

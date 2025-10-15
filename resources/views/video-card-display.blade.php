@@ -1,7 +1,8 @@
 {{-- Video Display Page --}}
 {{-- Implementation of slider and nav --}}
 @include('layouts.navigation')
-
+@section("content", "Display Vidoe")
+@section("title","sdfsdf" )
 <header>
 <link rel="stylesheet" type="style/css" href="">
 <title>Watch In Bebin</title>

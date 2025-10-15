@@ -202,4 +202,29 @@ public function sendCode(Request $request)
         return redirect()->route('home');
     }
     // END: Rewritten verifyCode method
+
+
+private function getYouTubeTimePassed($date)
+    {
+        $now = Carbon::now();
+        $diffInSeconds = $date->diffInSeconds($now);
+
+        if ($diffInSeconds < 10) {
+            return 'just now';
+        } elseif ($diffInSeconds < 60) {
+            return $diffInSeconds . 's ago';
+        } elseif ($diffInSeconds < 3600) {
+            return floor($diffInSeconds / 60) . 'm ago';
+        } elseif ($diffInSeconds < 86400) {
+            return floor($diffInSeconds / 3600) . 'h ago';
+        } elseif ($diffInSeconds < 2592000) {
+            return floor($diffInSeconds / 86400) . 'd ago';
+        } elseif ($diffInSeconds < 31536000) {
+            return floor($diffInSeconds / 2592000) . 'mo ago';
+        } else {
+            return floor($diffInSeconds / 31536000) . 'y ago';
+        }
+    }
+
+
 }

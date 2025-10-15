@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- for compoennt title which is not nececcryt : "@"stack('title', 'Default App Title') -->
-        <title> @yield('title', "This is My title") || {{ config('app.name', 'Laravel') }}</title>
+        <title> @yield('title', "This is My Channel") || {{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -31,13 +31,13 @@
     <!-- Main Content -->
     <div id="main">
     {{-- @auth --}}
-        <x-video-card />
+      <x-channel-page />
+    {{-- @yield("content") --}}
     {{-- @else --}}
         {{-- <p class="auth-warning">Please log in to view videos.</p> --}}
     {{-- @endauth --}}
 </div>
     {{-- <x-contact-form /> --}}
-    <x-email-verficiation-code />
 
 
  {{-- <div class="layout">

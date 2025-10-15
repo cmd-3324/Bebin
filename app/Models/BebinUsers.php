@@ -21,6 +21,7 @@ class BebinUsers extends Authenticatable
         'password',
         'SubscribersNum',
         'Age',
+        'ProfiltoPath',
         'Video_num',
         'comments_num',
     ];
@@ -41,7 +42,23 @@ class BebinUsers extends Authenticatable
     {
         return $this->hasMany(VideoStorageMetadata::class, 'UserID', 'UserID');
     }
+    // HANdling Profile IMage show in Channel,Video Cards meta data ONLY! 
+/**
 
+     * @param  int  $id
+     * @return string
+     */
+    public static function getProfileImagePathById($id)
+    {
+        $user = self::find($id);
+
+        if ($user && $user->ProfiltoPath) {
+            return asset('storage/app//public//Avatars/' . $user->ProfiltoPath);
+        }
+
+        // Default image if user doesn't have one
+        return asset('storage\\app\\public\\GuestProfile.png');
+    }
     public function sharedVideos()
     {
         return $this->belongsToMany(
