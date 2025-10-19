@@ -1,14 +1,10 @@
-
-<link rel="stylesheet" href="{{ asset('css/SearchBarCss.css') }}">
-
 <div class="header-center">
     <form class="search-container" role="search" method="GET" autocomplete="on">
         <input
-            type="text"
+            type="search"
             name="q"
             class="search-input"
             placeholder="Search"
-            spellcheck="true" 
             aria-label="Search"
             {{-- value="{{ request('q') }}" --}}
         />
@@ -22,5 +18,6 @@
 </div>
 
 @push('styles')
-
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('css/SearchBarCss.css') }}">
 @endpush

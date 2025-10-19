@@ -29,34 +29,14 @@
     @include('layouts.navigation')
 
     <!-- Main Content -->
-    <div id="main">
-    {{-- @auth --}}
-        <x-video-card />
-    {{-- @else --}}
-        {{-- <p class="auth-warning">Please log in to view videos.</p> --}}
-    {{-- @endauth --}}
-</div>
-    {{-- <x-contact-form /> --}}
-    <x-email-verficiation-code />
-
-
+  @include("homepage")
+   @yield("content-video")
+  
  {{-- <div class="layout">
     {{ $slot }}
 </div> --}}
 
     {{-- @stack('scripts') --}}
-{{-- <style>.auth-warning {
-  max-width: 480px; /* YouTube video card width approx */
-  margin-left: 500px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-/
-  font-family: 'Roboto', Arial, sans-serif;
-  font-size: 16px;
-  color: #333;
-  text-align: center;
-}
-</style> --}}
+
 </body>
 </html>

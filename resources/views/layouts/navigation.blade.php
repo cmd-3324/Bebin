@@ -351,10 +351,10 @@
             @csrf
             <input type="file" name="video" id="videoInput" accept="video/*" style="display: none;" onchange="this.form.submit()">
             <button type="button" class="upload-button" onclick="document.getElementById('videoInput').click()">
-                <span>+</span> Create
+                <span>+</span> Upload Video
             </button>
         </form>
-        <p>{{ Carbon\Carbon::now()->addHours(31);}}</p>
+
         @if(session('success'))
             <script>alert('✅ {{ session('success') }}');</script>
         @endif
@@ -719,7 +719,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('main');
-
+    
     let sidebarOpen = false;
 
     if (sidebarToggle && sidebar) {
@@ -742,7 +742,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const voiceModalClose = document.querySelector('.voice-modal-close');
     const voiceStatus = document.querySelector('.voice-status');
     const voiceInstruction = document.querySelector('.voice-instruction');
-
+    
     let recognition = null;
     let isListening = false;
 
@@ -828,7 +828,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userAvatar.addEventListener('click', function(e) {
             e.stopPropagation();
             const isVisible = profileDropdown.classList.contains('show');
-
+            
             document.querySelectorAll('.profile-dropdown').forEach(d => d.classList.remove('show'));
             notificationDropdowns.forEach(d => d.classList.remove('show'));
 
@@ -842,7 +842,7 @@ document.addEventListener("DOMContentLoaded", function () {
         guestAvatar.addEventListener('click', function(e) {
             e.stopPropagation();
             const isVisible = guestDropdown.classList.contains('show');
-
+            
             document.querySelectorAll('.profile-dropdown').forEach(d => d.classList.remove('show'));
             notificationDropdowns.forEach(d => d.classList.remove('show'));
 

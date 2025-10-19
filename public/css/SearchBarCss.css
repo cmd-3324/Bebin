@@ -1,3 +1,5 @@
+<style>
+/* Reset */
 
 * {
     margin: 0;
@@ -5,7 +7,9 @@
     box-sizing: border-box;
 }
 
+
 /* Header center container */
+
 .header-center {
     display: flex;
     align-items: center;
@@ -14,7 +18,9 @@
     justify-content: center;
 }
 
+
 /* Search form container */
+
 .search-container {
     display: flex;
     flex: 1;
@@ -32,7 +38,9 @@
     box-shadow: 0 0 0 1px #1a73e8;
 }
 
+
 /* Search input */
+
 .search-input {
     flex: 1;
     height: 100%;
@@ -50,7 +58,9 @@
     font-weight: 400;
 }
 
+
 /* Search button */
+
 .search-button {
     width: 64px;
     height: 40px;
@@ -80,7 +90,9 @@
     color: #606060;
 }
 
+
 /* Microphone button */
+
 .mic-button {
     margin-left: 12px;
     width: 40px;
@@ -108,7 +120,9 @@
     color: #606060;
 }
 
+
 /* Dark mode support */
+
 body.dark .search-container {
     background-color: #121212;
     border-color: #303030;
@@ -161,12 +175,13 @@ body.dark .mic-button i {
     color: #f1f1f1;
 }
 
+
 /* Responsive design */
+
 @media (max-width: 768px) {
     .header-center {
         margin: 0 20px;
     }
-
     .search-container {
         max-width: 400px;
     }
@@ -176,11 +191,9 @@ body.dark .mic-button i {
     .header-center {
         margin: 0 10px;
     }
-
     .search-container {
         max-width: 300px;
     }
-
     .mic-button {
         margin-left: 8px;
     }
@@ -191,3 +204,5 @@ body.dark .mic-button i {
         max-width: 200px;
     }
 }
+
+</style>
