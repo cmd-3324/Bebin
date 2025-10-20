@@ -2,14 +2,10 @@
 
 @section('title', 'My Channel')
 
-{{-- @push('styles')
-<link rel="stylesheet" href="{{ asset('css/ChannelPageCss.css') }}">
-@endpush --}}
 
-@section('content')
+
+@section('content_channel')
 <div class="cp-root">
-    {{-- <x-search-form />
-    <x-main-sliderbar /> --}}
-    {{-- <x-channel-page /> --}}
+    <x-channel-page />
 </div>
 @endsection

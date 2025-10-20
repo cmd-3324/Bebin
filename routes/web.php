@@ -5,8 +5,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('layouts.app');
-});
+    return view('homepage'); // Match the actual filename
+})->name("home");
+
 Route::post("/send-verification-code", [MangeController::class, "sendCode"])->name("verification.send");
 Route::post("/verify-code", [MangeController::class, "verifyCode"])->name("verification.verify");
 

@@ -2,18 +2,23 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-
 
 class ChannelPage extends Component
 {
-    public $channel ="sdfsd"; // array or object with name, avatar, banner, id, etc.
+    public $banner;
+    public $avatar;
+    public $name;
+    public $subscribers;
+    public $videosCount;
 
-    public function __construct()
+    public function __construct($banner = null, $avatar = null, $name = null, $subscribers = 0, $videosCount = 0)
     {
-        // $this->channel = $channel;
+        $this->banner = $banner;
+        $this->avatar = $avatar;
+        $this->name = $name;
+        $this->subscribers = $subscribers;
+        $this->videosCount = $videosCount;
     }
 
     public function render()

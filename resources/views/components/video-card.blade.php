@@ -1,5 +1,6 @@
 
-    <link rel="stylesheet" href="{{ asset('css/VideoCard.css') }}">
+ 
+<link rel="stylesheet" href="{{ asset('css/VideoCard.css') }}">
 
 
 @php
@@ -151,4 +152,3 @@ $videos = [
     </div>
 </a>
 @endforeach
-

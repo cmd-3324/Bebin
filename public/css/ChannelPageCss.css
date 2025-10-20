@@ -1,1 +1,60 @@
-s
+:root {
+    --bg: #ffffff;
+    --text: #111111;
+    --muted: #606060;
+    --tab-hover: #f2f2f2;
+    --border: #ddd;
+}
+
+[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --text: #f9f9f9;
+    --muted: #b0b0b0;
+    --tab-hover: #333;
+    --border: #333;
+}
+
+.channel-root {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+
+.channel-banner img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.channel-info .channel-meta {
+    color: var(--muted);
+}
+
+.channel-tabs {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+}
+
+.channel-tabs .tab-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.channel-tabs .tab-link:hover {
+    color: var(--text);
+    border-bottom: 2px solid var(--text);
+}
+
+.subscribe-btn,
+.manage-btn,
+.customize-btn {
+    font-size: 14px;
+    transition: background 0.3s;
+}
